@@ -1,0 +1,56 @@
+<% include ../partials/header %>
+<% include ../partials/navbar %> 
+<% include ../partials/indexJumbotron %> 
+
+<% var defaultPath = "https://images.unsplash.com/photo-1502979932800-33d311b7ce56?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max&ixid=eyJhcHBfaWQiOjF9%0A&s=115e3c47cf8a55cec04b6687357f10a2" %>
+
+<div class="container">
+    <div class="row">
+        <%books.forEach(function(book) {%>
+            <div class="col-md-4">
+                <div class="card mb-2">
+                    <div class="view overlay hm-white-slight">
+                        <%if(book.image === undefined ){%>
+                            <img class="img-fluid" src="<%= defaultPath %>" alt="Book image">
+                        <%} else {%>
+                            <img class="img-fluid" src="<%= book.image %>" alt="Book image">
+                        <%}%>
+                        <a>
+                            <div class="mask waves-effect waves-light"></div>
+                        </a>
+                    </div>
+                    <div class="card-block">
+                        <div class="row">
+                            <div class="col-md-9">
+                                <div class="pull-left">
+                                    <h4 class="card-title"><%=book.name%></h4>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="pull-right">
+                                    <%if(!currentUser.equals(book.author)) {%>
+                                        <p id='inline-p'>
+                                            <a href="/books/<%=book._id%>/trade/<%=currentUser._id%>" id="alert-target">
+                                                <i data-toggle="tooltip" data-placement="top" title="Request book trade" class="fa fa-exchange" aria-hidden="true"></i>
+                                            </a>
+                                        </p>
+                                    <%}%>
+                                    <p id='inline-p'>
+                                        <a href="<%=book.link%>" target="_blank">
+                                            <i data-toggle="tooltip" data-placement="top" title="User portfolio" class="fa fa-info-circle" aria-hidden="true"></i>
+                                        </a>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <h6><span class="badge blue">by <%=book.authorName%></span></h6>
+                    </div>
+                </div>
+            </div>
+        <%})%>
+    </div>
+</div>
+
+<% include ../partials/footer %>
